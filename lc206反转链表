@@ -13,8 +13,8 @@
         while(curr != null){
             ListNode temp = curr.next;
             curr.next = pre;
-            pre = curr;//pre = pre.next
-            curr = temp;//curr = curr.next;
+            pre = curr;//不能写pre = pre.next
+            curr = temp;//不能写curr = curr.next;
         }
     return pre;
     }
