@@ -1,0 +1,21 @@
+/**
+给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次
+
+
+**/
+//链表使排序的，所以一个指针就够了，因为如果元素重复的话，这个重复元素一定是相邻的
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode p = head;
+        while(p != null && p.next != null){
+            if(p.val == p.next.val){
+                p.next = p.next.next;
+            }
+            else{//注意要有else，有重复元素不要移动，因为有可能[1,1,1]，如果移动指针了就无法删除第三个重复了
+                p = p.next;
+            }
+        }
+    return head;
+
+    }
+}
