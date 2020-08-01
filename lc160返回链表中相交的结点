@@ -1,0 +1,43 @@
+/**step1:先算出链表a和链表b的长度，找出长度差值
+STEP2:长度长的那个链表先走差值步数，使两个指针在链表中同一位置
+step3：指针a和指针b一起走，直至两个指针相等时，返回指针此处的结点
+**/
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //A链表的长度
+        ListNode pA = headA;
+        ListNode pB = headB;
+        int lenA = 0;
+        while(pA != null){
+            lenA ++;
+            pA = pA.next;
+        }
+        //B链表的长度
+        int lenB = 0;
+        while(pB != null){
+            lenB ++;
+            pB = pB.next;
+        }
+        //算完长度后，指针回到开头
+        pA = headA;
+        pB = headB;
+        if(lenA > lenB){
+            int diff = lenA - lenB;
+            for(int i = 0; i < diff; i++){
+                pA = pA.next;
+            }
+        }
+        else{
+            int diff = lenB - lenA;
+            for(int i = 0; i < diff; i++){
+                pB = pB.next;
+            }
+        }
+        //一起走
+        while(pA != pB){
+            pA = pA.next;
+            pB = pB.next;
+        }
+        return pA;
+    }
+}
