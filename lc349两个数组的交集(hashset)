@@ -1,0 +1,62 @@
+//方法1：定义一个set
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> hs = new HashSet<Integer>();
+        //int len = Math.min(nums1.length,nums2.length);
+        List<Integer> res = new ArrayList<Integer>();
+        for(int i = 0; i < nums1.length; i++){
+            hs.add(nums1[i]);//把nums1中元素都加入set中，set可自动去重
+        }//hs中[1,2]
+        for(int i = 0; i < nums2.length; i++){
+            if(hs.contains(nums2[i])){
+                res.add(nums2[i]);
+                hs.remove(nums2[i]);
+            }
+        }
+    int[] result = new int[res.size()];
+    for(int i =0; i < res.size(); i++){
+        result[i] = res.get(i); 
+    }
+    return result;
+    }
+}
+
+
+//方法2：定义两个set
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        //hs1=[1,2],hs2=[2]
+        Set<Integer> hs1 = new HashSet<Integer>();
+        Set<Integer> hs2 = new HashSet<Integer>();
+        for(int i = 0; i < nums1.length; i++){
+            hs1.add(nums1[i]);
+        }
+
+        for(int i = 0; i < nums2.length; i++){
+            hs2.add(nums2[i]);
+        }
+
+        //查找相交部分
+        List<Integer> list = new ArrayList<>();
+        for(int item : hs1){
+            if(hs2.contains(item)){//找到重复元素
+                list.add(item);//add
+            }
+        }
+        //定义一个数组作为返回，因为题中要返回一个int的数组
+        int[] res = new int[list.size()];
+        //list转为数组方法1：for循环
+        /**for(int i = 0; i < list.size(); i++){//list集合转化为数组的方法1
+            res[i] = list.get(i);
+        }**/
+        /**list转为数组方法2：迭代？（不知道叫啥），注意res下标要自定义，list中遍历的值都存在了item
+        中，就不需要list.get()方法了**/
+        int start = 0;
+        for(int item : list){
+            res[start] = item;
+            start ++;
+        }
+    return res;
+
+    }
+}
