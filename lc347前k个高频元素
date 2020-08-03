@@ -1,0 +1,58 @@
+/**给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
+示例 1:
+
+输入: nums = [1,1,1,2,2,3], k = 2
+输出: [1,2]
+示例 2:
+
+输入: nums = [1], k = 1
+输出: [1]
+
+**/
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        //先用一个hashmap装进去值和出现的次数
+        Map<Integer,Integer> hm = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            if(hm.containsKey(nums[i])){//重复
+                hm.put(nums[i],hm.get(nums[i]) + 1);
+            }else{
+                hm.put(nums[i],1);
+            }
+        }
+        //定义
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(
+            new Comparator<Integer>(){//类？？
+                public int compare(Integer a , Integer b){
+                    return hm.get(a) - hm.get(b);
+                }
+
+            });
+/** 输出 key 和 value
+        for (Integer i : Sites.keySet()) {//i是哈希表中的key
+            System.out.println("key: " + i + " value: " + Sites.get(i));
+        } **/
+        for(Integer key : hm.keySet()){//hashmap.keySet()方法可以直接一次性把key和value都取出来
+           if(priorityQueue.size() < k){//维护了最小堆中只有k个元素
+               priorityQueue.add(key);
+           }else if(hm.get(key) > hm.get(priorityQueue.peek())){
+               priorityQueue.remove();
+               priorityQueue.add(key);
+           }
+        }
+        //取出最小堆中元素
+        List<Integer> list = new ArrayList<>();
+        while(!priorityQueue.isEmpty()){
+            list.add(priorityQueue.remove());//取出最大的
+        }
+        //转数组
+        int[] res = new int[list.size()];
+        int start = 0;
+        for(int item : list){
+            res[start] = item;
+            start ++;
+        }
+    return res;
+    }
+}
