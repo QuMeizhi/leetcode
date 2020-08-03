@@ -1,0 +1,20 @@
+/**hashmap中如果每个元素只能用一次，就要先判断，再加进去
+比如：[4,3,5,9,6] ,target = 8,如果遍zhi历到4的时候，然后加进hm中的话，然后在判断，那么相当于4用了2次（数组遍历一次，hm中一次）
+实际4只有一次，所以要先判断，如果没有再加进hm中，加进去之后for循环的i就变下一个了，保证了4只用了一次
+所以：为了避免重复，先判断再加入！！！  **/
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> hm = new HashMap<>();//数值，下标
+        
+        for(int i = 0; i < nums.length; i++){
+            if(hm.containsKey(target - nums[i])){
+                return new int[]{hm.get(target - nums[i]), i};
+            }
+            else{
+                hm.put(nums[i], i);
+            }
+        }
+    return nums;
+    }
+}
