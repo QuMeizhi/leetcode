@@ -41,3 +41,46 @@ public class Solution {
         return pA;
     }
 }
+
+
+
+//方法2：考虑了没有相交结点的情况（更好，推荐）
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //先算各自长度，长的先走
+        int lenA = 0;
+        int lenB = 0;
+        ListNode pA = headA;
+        ListNode pB = headB;
+        while(pA != null){
+            pA = pA.next;
+            lenA ++;
+        }
+        while(pB != null){
+            pB = pB.next;
+            lenB ++;
+        }
+        pA = headA;
+        pB = headB;
+        if(lenA > lenB){
+            int different = lenA - lenB;
+            for(int i = 0; i < different; i++){
+                pA = pA.next;
+            }
+        }
+        else{
+            int different = lenB - lenA;
+            for(int i = 0; i < different; i++){
+                pB = pB.next;
+            }
+        }
+        //A,B已经对齐
+        while(pA != null && pB != null){//考虑了没有相交结点的情况
+            if(pA == pB) return pA;
+            pA = pA.next;
+            pB = pB.next;
+        }//跳出来代表其中一个链走到头了，都还没找到相交结点，代表没有相交的节点
+    return null;
+    }
+}
