@@ -1,0 +1,22 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while(left + 1 < right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] == target){
+                return mid;
+            }
+            if(nums[mid] > target){
+                right = mid;
+            }
+            else{//nums[mid] < target
+                left = mid;
+            }
+        }//跳出来是因为left和right相邻还没有找到，所以target存在left和right其中之一
+        if(nums[left] == target) return left;
+        if(nums[right] == target) return right;
+        else return -1;
+
+    }
+}
