@@ -1,0 +1,22 @@
+/* The isBadVersion API is defined in the parent class VersionControl.
+      boolean isBadVersion(int version); */
+
+public class Solution extends VersionControl {
+    public int firstBadVersion(int n) {
+        int left = 0;
+        int right = n;
+        while(left + 1 < right){
+            int mid = left + (right - left) / 2;
+            if(isBadVersion(mid) == true){//是错误版本，但是不能停下，要继续往前找是不是第一个
+                right = mid;//若left = mid + 1不可以，因为mid有可能是第一个错误版本
+            }else{//不是错误版本,继续向前找
+                left  = mid;
+            }
+        }
+        /**正常这么写：
+        if(isBadVersion(left) == true) return left;
+        if(isBadVersion(right) == true) return right;
+        但是这个题要return，不能return两个，所以用下面的形式**/
+        return isBadVersion(left)? left : right;
+    } 
+}
