@@ -15,6 +15,25 @@ class Solution {
                 hm.put(nums[i], i);
             }
         }
-    return nums;
+    return nums;//因为上边已经return正确的数组了，所以最后这个return就随便写
+    }
+}
+
+
+方法2：
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> hm = new HashMap<>();//装数值和index
+        int[] res = new int[]{-1,-1};//定义一个数组
+        for(int i = 0; i <= nums.length - 1; i++){
+            if(hm.containsKey(target - nums[i])){
+               res[0] = i;
+               res[1] = hm.get(target - nums[i]);
+            }
+            else{
+                hm.put(nums[i],i);
+            }
+        }
+    return res;
     }
 }
