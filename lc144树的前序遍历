@@ -11,3 +11,22 @@ class Solution {
     return res;
     }
 }
+
+//写法2：用栈迭代
+class Solution {
+    List<Integer> res = new ArrayList<>();
+    public List<Integer> preorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        while(root != null || !stack.isEmpty()){//root,left,right
+            if(root != null){
+                res.add(root.val);
+                stack.push(root);
+                root = root.left;//不断向左子树找
+            }else{//到了空结点，找到了最左边叶子结点的左孩子（一个空结点）
+                root = stack.pop();//回溯
+                root = root.right;//因为根和左子树已经打印完了，所以要开始打印右子树了
+            }
+        }
+    return res;
+    }
+}
