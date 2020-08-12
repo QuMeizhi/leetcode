@@ -1,0 +1,33 @@
+//方法1：递归
+
+class Solution {
+    List<Integer> res = new ArrayList<>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if(root == null) return res;
+        inorderTraversal(root.left);
+        res.add(root.val);
+        inorderTraversal(root.right);
+    return res;
+    }
+}
+
+//写法2：用栈的迭代实现
+
+class Solution {
+    //left, root, right
+    List<Integer> res = new ArrayList<>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        while(root != null || !stack.isEmpty()){
+            if(root != null){
+                stack.push(root);
+                root = root.left;//
+            }else{//root = null stack不空
+                root = stack.pop();//回溯至刚才的父节点
+                res.add(root.val);//打印父节点（相当于left和根）
+                root = root.right;//根节点和左子树都打印完了，开始打印右子树的结点了
+            }
+        }
+    return res;
+    }
+}
