@@ -2,9 +2,7 @@
 输入: 1->2->3->4->5->NULL
 输出: 5->4->3->2->1->NULL
 **/
-
-    
-    
+方法1：迭代法
    public ListNode reverseList(ListNode head) {
         ListNode pre = null;
         //pre.next = head;
@@ -17,5 +15,20 @@
             curr = temp;//不能写curr = curr.next;
         }
     return pre;
+    }
+}
+
+方法2：递归法
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //反转链表：找到反转的前一个结点，进行反转，在返回新的头节点
+        if(head == null || head.next == null) return head;//每层结束条件1
+        //recursion
+        ListNode cur = reverseList(head.next);
+        //recursive rule
+        head.next.next = head;
+        head.next = null;
+        return cur;//每层结束条件2，也是递归最后的结束条件返回头结点
+
     }
 }
