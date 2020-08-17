@@ -1,0 +1,37 @@
+784. 字母大小写全排列
+给定一个字符串S，通过将字符串S中的每个字母转变大小写，我们可以获得一个新的字符串。返回所有可能得到的字符串集合。
+示例：
+输入：S = "a1b2"
+输出：["a1b2", "a1B2", "A1b2", "A1B2"]
+
+输入：S = "3z4"
+输出：["3z4", "3Z4"]
+
+输入：S = "12345"
+输出：["12345"]
+
+class Solution {
+    public List<String> letterCasePermutation(String S) {
+        List<String> res = new ArrayList<>();
+        int index = 0;
+        dfs(index, new StringBuilder(S), res);
+        return res;
+    }
+    
+    private void dfs(int index, StringBuilder s, List<String> res){
+        if(index == s.length()){
+            res.add(s.toString());
+            return;
+        }
+        //第一次，把input的字符串的每个字符原样放入，当等于input字符串长度时，停止，进行回溯
+        dfs(index + 1, s, res);
+        //回溯：转到上一层的index的字符，判断是不是字母进行转换，不是字母的话：就什么都不用做(系统会///自己自动return至上一层，因为这层的if无法执行，代表此index这层全部进行完了，自动return至上一层)
+        //把字符串中的字符取出index位置上的，因为回溯回来那个位置就是上一层的index
+        char c = s.charAt(index);
+        //Character.isLetter(c)判断一个字符是不是字母
+        if(Character.isLetter(c)){
+            s.setCharAt(index,(char)(c ^ 32));//字符 ^ 32 大小写字母互相转换
+            dfs(index + 1, s, res);
+        }
+    }
+}
