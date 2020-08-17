@@ -1,0 +1,39 @@
+22. 括号生成
+数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+示例：
+输入：n = 3
+输出：[
+       "((()))",
+       "(()())",
+       "(())()",
+       "()(())",
+       "()()()"
+     ]
+     
+  
+ class Solution {
+    public List<String> path = new ArrayList<>();
+    public List<String> generateParenthesis(int n) {
+        int left = n;
+        int right = n;
+        dfs(left, right, new StringBuilder());
+        return path;
+    }
+    private void dfs(int left, int right, StringBuilder trace){
+        if(right < left) return;//右边要剩下的比左边多，若不符合return
+        if(left < 0 || right < 0) return;
+        if(left == 0 && right == 0){
+            path.add(trace.toString());
+            return;
+        }
+        //add '('
+        trace.append('(');
+        dfs(left - 1, right, trace);
+        trace.deleteCharAt(trace.length() - 1);
+
+        //add ')'
+        trace.append(')');
+        dfs(left, right - 1, trace);
+        trace.deleteCharAt(trace.length() - 1);
+    }
+}
