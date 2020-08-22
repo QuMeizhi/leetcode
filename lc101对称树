@@ -35,3 +35,19 @@ class Solution {
         return helper(t1.left,t2.right) && helper(t1.right,t2.left);
     }
 }
+
+
+//剑指offer27 //
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) return true;
+        return helper(root.left,root.right);
+    }
+    private boolean helper(TreeNode t1, TreeNode t2){
+        if(t1 == null && t2 == null) return true;
+        if(t1 == null || t2 == null) return false;
+        if(t1.val != t2.val) return false;//必须写！=，不能写=，因为有一个不等于一定不是对称，有一个等于不一定是对称
+        return helper(t1.left,t2.right) && helper(t1.right,t2.left);
+    }
+}
