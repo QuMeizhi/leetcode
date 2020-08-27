@@ -11,6 +11,7 @@
 class Solution {
     public void sortColors(int[] nums) {
 //保证[0,i)都是0，[j,nums.length - 1]都是2
+//还要保证i指针左边都是0/1，所以等2的时候交换不能i++，因为不知道交换过来的是多少，所以不能i--
 //low和high用于固定元素，i用于移动遍历元素
         int low = 0; int high = nums.length - 1;
         int i = 0;
