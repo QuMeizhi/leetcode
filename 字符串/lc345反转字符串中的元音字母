@@ -1,0 +1,42 @@
+345. 反转字符串中的元音字母
+编写一个函数，以字符串作为输入，反转该字符串中的元音字母。
+
+示例 1：
+输入："hello"
+输出："holle"
+
+示例 2：
+输入："leetcode"
+输出："leotcede"
+
+class Solution {
+    public String reverseVowels(String s) {
+        char[] c = s.toCharArray();
+        int i = 0;
+        int j = c.length - 1;
+        while(i < j){
+            //先从左往右找元音字符，找到就停下
+            while(i < j && !isVowel(c[i])){
+                i ++;
+            }
+            //i,j同时都是元音时候再交换
+            while(i < j && !isVowel(c[j])){
+                j --;
+            }
+            swap(c, i, j);
+            i ++;
+            j --;
+        }
+        //new String(arr)把数组转回字符串 , s.toString()把StringBuilder类型输出为String类型
+    return new String(c);
+    }
+    private void swap(char[] c, int a, int b){
+        char tmp = c[a];
+        c[a] = c[b];
+        c[b] = tmp;
+    }
+    private boolean isVowel(char ch){
+        return ch == 'a' || ch == 'A' || ch =='e' || ch =='E' || ch =='i' || ch =='I' ||
+               ch == 'o' || ch == 'O' || ch == 'u' || ch == 'U';
+    }
+}
