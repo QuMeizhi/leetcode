@@ -1,0 +1,63 @@
+125. 验证回文串
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+说明：本题中，我们将空字符串定义为有效的回文串。
+
+示例 1:
+输入: "A man, a plan, a canal: Panama"
+输出: true
+
+示例 2:
+输入: "race a car"
+输出: false
+
+//方法1：用s.charAt(),无需转化s.toCharArray()字符型数组
+class Solution {
+    public boolean isPalindrome(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+        while(i < j){//Character.isLetterOrDigit()判断是否是字母或者数字
+            if(!Character.isLetterOrDigit(s.charAt(i))){
+                i ++;
+                continue;//continue是跳过了底下的i++和j--,如果不continue就会少比较一个位置
+            }
+            else if(!Character.isLetterOrDigit(s.charAt(j))){
+                j --;
+                continue;
+            }
+            //Character.toUpperCase()都转化为大写字母
+            //Character.toLowerCase()都转化为小写字母
+            else if(Character.toUpperCase(s.charAt(i))!= Character.toUpperCase(s.charAt(j))){
+                return false;
+            }
+            i ++;
+            j --;
+        }
+    return true;
+    }
+}
+
+//方法2：利用s.toCharArray()方法，转化为字符型数组
+class Solution {
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase();
+        char[] c = s.toCharArray();
+        int i = 0, j = c.length - 1;
+        while(i < j){
+            if(!Character.isLetterOrDigit(c[i])){
+                i++;
+                continue;
+            }
+              if(!Character.isLetterOrDigit(c[j])){
+                j--;
+                continue;
+            }
+            if(c[i] != c[j]){
+                return false;
+            }
+        i++;
+        j--;
+        }
+    return true;
+
+    }
+}
