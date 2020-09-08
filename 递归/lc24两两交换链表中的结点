@@ -1,0 +1,25 @@
+24. 两两交换链表中的节点
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+示例:
+给定 1->2->3->4, 你应该返回 2->1->4->3.
+
+
+//方法1：递归写法
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        //base case
+        if(head == null || head.next == null) return head;
+        ListNode first = head;
+        ListNode second = first.next;
+        //recusive rule每层要做的事情：两个结点为一对反转链表
+        //1 要和 4 相连, 4是后面要用递归反转的结点，从3开始反转所以函数中参数是first.next.next
+        first.next = swapPairs(first.next.next);//first.next = swapPairs(second.next);
+        second.next = first;
+
+//每层要做的事情完成后，要返回给上一层此层完成的结果(题目要求头节点)),此层second为头节点了，所以返回second
+        return second;
+    }
+    
+}
