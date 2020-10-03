@@ -1,0 +1,44 @@
+/*
+200. 岛屿数量
+给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+岛屿总是被水包围，并且每座岛屿只能由水平方向或竖直方向上相邻的陆地连接形成。
+此外，你可以假设该网格的四条边均被水包围。
+*/
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        int number = 0;
+        //寻找第一个陆地的点
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j] == '1'){
+                    number ++;
+                    //开始寻找与它相连的所有是否也是陆地，用bfs或者dfs都可以
+                    bfs(grid, i, j);
+                }
+            }
+        }
+    return number;
+    }
+    private void bfs(char[][] grid, int i, int j){
+        //发现一个陆地的点，就立刻入队，然后poll出来，extend与它相邻的所有节点
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{i, j});
+        while(!queue.isEmpty()){
+            int[] cur = queue.poll();
+            int x = cur[0];//poll出来的x坐标
+            int y = cur[1];//poll出来的y坐标
+            //base case
+            if(x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y] != '1'){
+                return;
+            }
+            grid[x][y] = '2';//设置为已经遍历过的点，防止此点重复遍历
+            //开始看cur点，也就是陆地点的上下左右
+            bfs(grid, x - 1, y);
+            bfs(grid, x + 1, y);
+            bfs(grid, x, y - 1);
+            bfs(grid, x, y + 1);
+        }
+
+    }
+}
