@@ -17,7 +17,7 @@ class Solution {
         //从最右上角开始
         int row = 0;
         int column = matrix[0].length - 1;
-        while(row < matrix.length && column >= 0){
+        while(row < matrix.length && column >= 0){//为什么没用for遍历？因为此题是找到target就返回，没有必要遍历每个数字，for遍历是dfs那种要求遍历到每个数字的时候才使用
             if(matrix[row][column] == target){
                 return true;
             }else if(matrix[row][column] > target){
