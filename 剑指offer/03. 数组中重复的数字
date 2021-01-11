@@ -1,0 +1,53 @@
+找出数组中重复的数字。
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
+
+示例 1：
+输入：
+[2, 3, 1, 0, 2, 5, 3]
+输出：2 或 3 
+
+
+O(1)时间复杂度：
+/*思路：用O(1)的时间复杂度的话，不要用hashset，hashset是O(N)
+因为长度是n，所以数组的下标是0～n-1，所有数字都在 0～n-1，所以说明如果排序完且没有重复数字的话，数字的值和下标的值应该是一一对应相等的
+1.先比较数值和index的值是否相等，相等的话，说明这个数字已经在正确的位置上了，遍历下一个数字
+2.不想等：把数值的值和index= 此值的位置比较（也就是说把这个数和它应该在的正确位置上的数字比较
+若相等，说明它正确位置山也存在了，找到一个重复数字
+不想等：交换，把这个数字放到正确的位置上
+3.重复此循环，直至此数字已经在正确的位置上之后，遍历下一个数字
+***当每一个数字都已经在它应该在的位置上的时候，才结束这个数字，遍历下一个数字
+*/
+class Solution {
+    public int findRepeatNumber(int[] nums) {
+        if(nums.length < 0) return -1;
+        for(int i = 0; i < nums.length; i++){
+            while(i != nums[i]){//数字没有在正确的位置上，一直循环，直至此数字归至正确位置
+                if(nums[i] == nums[nums[i]]){//nums[nums[i]]此数字应在位置上的值，因为index = nums[i]
+                    return nums[i];
+                }
+                //数字和正确位置上的值不一样，目前没有出现重复数字,swap
+                int tmp = nums[i];
+                nums[i] = nums[nums[i]];
+                nums[tmp] = tmp;
+            }
+        }
+    return -1;
+
+    }
+}
+
+
+O(N)时间复杂度：hashset
+class Solution {
+    public int findRepeatNumber(int[] nums) {
+        Set<Integer> hs = new HashSet<>();
+        for(int i = 0; i < nums.length; i++){
+            if(hs.contains(nums[i])){
+                return nums[i];
+            }else{
+                hs.add(nums[i]);
+            }
+        }
+    return -1;
+    }
+}
