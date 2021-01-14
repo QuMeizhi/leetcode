@@ -1,0 +1,68 @@
+给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+返回删除后的链表的头节点。
+注意：此题对比原题有改动
+
+示例 1:
+输入: head = [4,5,1,9], val = 5
+输出: [4,1,9]
+解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
+
+示例 2:
+输入: head = [4,5,1,9], val = 1
+输出: [4,5,9]
+解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
+
+/*
+删除链表的节点有两种方式
+方法一：正常遍历，找到要删除节点的前一个节点，pre.next = pre.next.next即可跳过要删除的节点 O(N)
+方法二：用待删除的节点的后一个节点去覆盖这个节点 O(1)
+*/
+
+方法一：O(N)
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteNode(ListNode head, int val) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while(cur.val != val){
+            pre = cur;
+            cur = cur.next;
+        }
+        pre.next = pre.next.next;
+    return dummy.next;
+    }
+}
+
+方法二：O(1)
+
+class Solution {
+    public ListNode deleteNode(ListNode head, ListNode target) {
+        //待删除的是头节点
+        if(head == target){
+            head = null;
+        }else if(target.next == null){//待删除的是尾节点,尾节点后面没有节点了，所以无法用覆盖的方法，正常遍历,找到尾节点的前一个节点
+            ListNode pre = head;
+            while(pre.next != target){
+                pre = pre.next;
+            }
+            pre.next = null;//尾部前一个节点变为尾节点了
+
+        }else{//待删除是中间节点，非头节点和尾节点，target.next != null,采用后面节点去覆盖的方法
+            ListNode tmp = target.next;//先把要用来覆盖的节点记录下来
+            target.val = target.next.val;
+            target.next = target.next.next;//越过用来覆盖的节点
+            tmp = null;//释放清空用来覆盖的节点
+        }
+    return head;
+    }
+}
+
