@@ -1,0 +1,53 @@
+一个整型数组 nums 里除两个数字之外，其他数字都出现了两次。请写程序找出这两个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。
+
+示例 1：
+输入：nums = [4,1,4,6]
+输出：[1,6] 或 [6,1]
+
+示例 2：
+输入：nums = [1,2,10,4,1,4,3,3]
+输出：[2,10] 或 [10,2]
+
+/*位运算相关习题题解：
+https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/solution/zhi-chu-xian-yi-ci-de-shu-xi-lie-wei-yun-suan-by-a/
+*/
+
+class Solution {
+    public int[] singleNumbers(int[] nums) {
+        int ret = 0;
+        for(int i = 0; i < nums.length; i++){
+            ret = ret ^ nums[i];//相同数字^ = 0, 所以最后剩下的就是两个只出现一次数字的异或结果
+        }//ret = 1 ^ 6,因为ret中可能出现好几个位置的数字不同，所以用tool辅助寻找从后往前第一次出现1(第一次出现不同)的位置，知道一个位置，即可完成分组
+        //从后往前找二进制中第一次出现1的位置，因为两个不同的数字异或 = 1，所以1 代表 1 ^ 6 在哪里出现了不同
+        int tool = 1;//1 = 0001  &运算： 只有1 & 1 = 1， 其余与运算都是0
+        while((tool & ret) == 0){
+            // 0001 <<< 1 = 0010 当ret & tool = 1时候说明找到了ret中从后往前第一次出现1的位置(因为tool中就一个1)
+            tool = tool << 1;
+        }
+
+        //分组：把 1 单独一组,6 单独一组,6 和 1 在tool的二进制出现1的位置出现了不同,所以必然1 & tool = 0/1, 6 & tool = 1/0
+        int a = 0;
+        int b = 0;
+        for(int i = 0; i < nums.length; i++){
+            if((nums[i] & tool) == 0){//group1:出现1的位置，nums[i]的对应位置是0，而tool其他位置都是0，所以最后结果都是0
+                a = a ^ nums[i];
+            }else{//nums[i] & tool != 0
+                b = b ^ nums[i];
+            }
+        }
+    return new int[]{a, b};
+    }
+}
+
+
+
+/*
+while((tool & ret) == 0){
+    tool = tool << 1;
+}
+等价
+int tool = ret & (- ret);
+
+x&(-x)：保留二进制下最后出现的1的位置，其余位置置0（即一个数中最大的2的n次幂的因数
+x&(x-1)：消除二进制下最后出现1的位置，其余保持不变
+*/
