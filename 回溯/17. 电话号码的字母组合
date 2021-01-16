@@ -1,0 +1,45 @@
+给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+
+示例:
+
+输入："23"
+输出：["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        if(digits.length() == 0 || digits == null) return res;
+        int index = 0;//index控制dfs树的层
+        StringBuilder sb = new StringBuilder();
+        Map<Character, String> hashmap = new HashMap<>();
+        hashmap.put('2', "abc");
+        hashmap.put('3', "def");
+        hashmap.put('4', "ghi");
+        hashmap.put('5', "jkl");
+        hashmap.put('6', "mno");
+        hashmap.put('7', "pqrs");
+        hashmap.put('8', "tuv");
+        hashmap.put('9', "wxyz");
+        dfs(digits, hashmap, index, res, sb);
+        return res;
+
+    }
+    private void dfs(String digits, Map<Character, String> hashmap, int index, List<String> res, StringBuilder sb){
+        //什么时候要回溯,index控制层，一层放一个，= digits.length()时候就一个完整的流程结束
+        if(index == digits.length()){
+            res.add(sb.toString());
+            return;
+        }
+        //先取得digits中第一个字符2，得到字符
+        char c = digits.charAt(index);
+        //遍历一个字符可能的选择：2的选择 a/b/c,但是每层只能选择一个选择
+        for(int i = 0; i < hashmap.get(c).length(); i ++){
+            sb.append(hashmap.get(c).charAt(i));//第一层加入了一个选择，比如选择了a
+            dfs(digits, hashmap, index + 1, res, sb);//下一层，进行下一层的选择，下一层要选择3的对应字母，所以c在遍历之前获取
+            sb.deleteCharAt(sb.length() - 1);//回溯，"23"的长度 = "ab"的长度时候，第一次结果找到进行回溯，return到上一层，进行上一层的下一个选择,所以要回溯
+        }
+
+    }
+}
